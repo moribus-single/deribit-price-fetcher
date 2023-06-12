@@ -1,6 +1,5 @@
 # Deribit Price Fetcher
 
----
 
 This is a project that fetches the prices of **ETH** and **BTC** from **Deribit API** and provides a small backend using 
 **FastApi** and **PostgreSQL** for analyzing the retrieved data.
@@ -43,6 +42,6 @@ This is a project that fetches the prices of **ETH** and **BTC** from **Deribit 
 
 ## API endpoints
 
-**/get_ticker_prices/** - получить все данные для конкретного тикера
-**/get_last_price/** - получить последнюю цену для конкретного тикера
-**/get_price_by_date/** - получить цену для конкретного тикера по дате. Формат даты ***YEAR-MONTH-DAY***
+**/get_ticker_prices/** - получить все данные для конкретного тикера <br>
+**/get_last_price/** - получить последнюю цену для конкретного тикера <br>
+**/get_price_by_date/** - получить цену для конкретного тикера по дате. Формат даты ***YEAR-MONTH-DAY*** <br>
