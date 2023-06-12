@@ -29,6 +29,7 @@ async def create_index_table(conn):
             ")"
 
     await conn.execute(query)
+    await conn.close()
 
 
 async def insert_index_data(conn, data: Index):
@@ -37,32 +38,40 @@ async def insert_index_data(conn, data: Index):
     await conn.execute(
         query.substitute(name=data.name, price=data.price, time=data.time)
     )
+    await conn.close()
 
 
 async def select_index_data_by_ticker(conn, ticker):
     query = Template("SELECT id, name, price, \"time\" FROM index WHERE name='$ticker'")
-    return await conn.fetch(query.substitute(ticker=ticker))
+    index_data_by_ticker = await conn.fetch(query.substitute(ticker=ticker))
+    await conn.close()
+    return index_data_by_ticker
 
 
 async def select_index_last_data_by_ticker(conn, ticker):
     query = Template("SELECT price FROM index WHERE name='$ticker' ORDER BY \"time\" DESC")
-    return await conn.fetch(query.substitute(ticker=ticker))
+    index_last_data = await conn.fetch(query.substitute(ticker=ticker))
+    await conn.close()
+    return index_last_data
 
 
 async def select_index_price_by_date(conn, ticker, start_timestamp, end_timestamp):
     query = Template("SELECT price FROM index WHERE "
                      "name = '$ticker' AND \"time\" >= $start_timestamp AND \"time\" < $end_timestamp")
-    return await conn.fetch(
+    index_price_by_date = await conn.fetch(
         query.substitute(
             ticker=ticker,
             start_timestamp=start_timestamp,
             end_timestamp=end_timestamp
         )
     )
+    await conn.close()
+    return index_price_by_date
 
 
 async def drop_database(conn, db_name):
     query = Template("DROP DATABASE $db_name")
-    conn.execute(
+    await conn.execute(
         query.substitute(db_name=db_name)
     )
+    await conn.close()
